@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品详情 - 苏州鼎博化学科技有限公司</title>
+    <meta name="description" content="苏州鼎博化学科技有限公司提供了各种化学产品，包括黑色素、染料、染料、染料等。">
+    <meta name ="name" content="cas,8049-97-6,黑色素">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 与主页一致的导航样式 */
+        .nav-bar {
+            background: #f8f9fa;
+            padding: 15px 5%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* 详情内容容器 */
+        .detail-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 产品卡片 */
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .product-title {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .cas-number {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            line-height: 1.8;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-link">返回主页</a>
+        </nav>
+
+        <div class="detail-container" v-if="product">
+            <div class="product-card">
+                <img :src="product.image" :alt="product.name" class="product-image">
+                <h1 class="product-title">{{ product.name }}</h1>
+                <div class="cas-number">CAS: {{ product.cas }}</div>
+                <p class="product-description">{{ product.description }}</p>
+            </div>
+        </div>
+
+        <div v-else class="error-message">
+            未找到该CAS号对应的产品
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        // 本地产品数据
+        const products = [
+            {
+                cas: '8049-97-6',
+                name: '黑色素',
+                image: '348434.png',
+                description: '本品为黑色结晶粉末，储存条件：密封保存于阴凉干燥处。'
+            },
+            {
+                cas: '144207-60-3',
+                name: '(GLN18)-PLATELET FACTOR 4 (15-22)',
+                image: 'product2.jpg',
+                description: '多肽化合物，用于生物医药研究...'
+            }
+        ];
+
+        new Vue({
+            el: '#app',
+            data: {
+                product: null
+            },
+            created() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const casParam = urlParams.get('cas');
+                this.product = products.find(p => p.cas === casParam);
+            }
+        })
+    </script>
+</body>
+</html>
